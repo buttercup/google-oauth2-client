@@ -2,8 +2,11 @@
   "name": "@buttercup/google-oauth2-client",
   "version": "0.0.0",
   "description": "Google OAuth2 authentication client",
-  "main": "source/index.js",
+  "main": "dist/google-oauth2.js",
   "scripts": {
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development --watch --progress",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,8 +27,13 @@
   },
   "homepage": "https://github.com/buttercup/google-oauth2-client#readme",
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
     "eventemitter3": "^4.0.0",
-    "query-string": "^6.8.1"
+    "query-string": "^6.8.1",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6"
   },
   "dependencies": {
     "cowl": "^0.4.0"
