@@ -9,6 +9,8 @@ This library is targeted at NodeJS but should work everywhere.
 
 ## Usage
 
+Install by running `npm install @buttercup/google-oauth2-client --save`.
+
 Import the `OAuth2Client` class to get started, similarly to the original implemenation:
 
 ```javascript
