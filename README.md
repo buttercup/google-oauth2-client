@@ -1,7 +1,7 @@
 # Google OAuth2 Client
 > Minimal compatibility-first Google OAuth2 client implementation
 
-[![npm version](https://badge.fury.io/js/%40buttercup%2Fgoogle-oauth2-client.svg)](https://www.npmjs.com/package/@buttercup/google-oauth2-client)
+[![npm version](https://badge.fury.io/js/%40buttercup%2Fgoogle-oauth2-client.svg)](https://www.npmjs.com/package/@buttercup/google-oauth2-client) [![Build Status](https://travis-ci.org/buttercup/google-oauth2-client.svg?branch=master)](https://travis-ci.org/buttercup/google-oauth2-client)
 
 ## About
 
