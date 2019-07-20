@@ -3,7 +3,7 @@ const { GOOGLE_OAUTH2_AUTH_BASE_URL, OAuth2Client } = require("../../dist/google
 describe("google-oauth2", function() {
     describe("OAuth2Client", function() {
         beforeEach(function() {
-            this.client = new OAuth2Client();
+            this.client = new OAuth2Client("clientid", "clientsecret", "https://website.com");
             sinon.stub(this.client, "_request").returns(Promise.resolve({
                 data: {
                     access_token: "at",
@@ -37,6 +37,16 @@ describe("google-oauth2", function() {
             it("includes the prompt", function() {
                 const url = this.client.generateAuthUrl(this.authURLConfig);
                 expect(url).to.contain("prompt=consent");
+            });
+
+            it("includes the client ID", function() {
+                const url = this.client.generateAuthUrl(this.authURLConfig);
+                expect(url).to.contain("client_id=clientid");
+            });
+
+            it("includes the redirect URL", function() {
+                const url = this.client.generateAuthUrl(this.authURLConfig);
+                expect(url).to.contain(`redirect_uri=${encodeURIComponent("https://website.com")}`);
             });
         });
 

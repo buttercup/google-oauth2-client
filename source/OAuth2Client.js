@@ -38,7 +38,9 @@ export default class OAuth2Client extends EventEmitter {
             access_type,
             scope,
             prompt,
-            response_type
+            response_type,
+            client_id: this._clientID,
+            redirect_uri: this._redirectURL
         };
         return `${GOOGLE_OAUTH2_AUTH_BASE_URL}?${stringify(opts)}`;
     }
