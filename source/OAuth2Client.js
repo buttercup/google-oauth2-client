@@ -34,6 +34,34 @@ export default class OAuth2Client extends EventEmitter {
         return `${GOOGLE_OAUTH2_AUTH_BASE_URL}?${stringify(opts)}`;
     }
 
+    async getToken(authCode) {
+        const data = {
+            code: authCode,
+            client_id: this._clientID,
+            client_secret: this._clientSecret,
+            redirect_uri: this._redirectURL,
+            grant_type: "authorization_code"
+        };
+        const res = await request({
+            url: GOOGLE_OAUTH2_TOKEN_URL,
+            method: "POST",
+            body: stringify(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+        const { data: tokens } = res;
+        if (tokens && tokens.expires_in) {
+            tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
+            delete tokens.expires_in;
+        }
+        this.emit("tokens", tokens);
+        return {
+            tokens,
+            res
+        };
+    }
+
     refreshToken(refreshToken) {
         if (!refreshToken) {
             return this.refreshTokenNoCache(refreshToken);
