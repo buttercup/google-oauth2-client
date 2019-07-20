@@ -15,6 +15,15 @@ export default class OAuth2Client extends EventEmitter {
         this._accessToken = null;
         this._refreshToken = null;
         this._refreshTokenPromises = new Map();
+        this._request = request;
+    }
+
+    get accessToken() {
+        return this._accessToken;
+    }
+
+    get refreshToken() {
+        return this._refreshToken;
     }
 
     generateAuthUrl(config) {
@@ -42,7 +51,7 @@ export default class OAuth2Client extends EventEmitter {
             redirect_uri: this._redirectURL,
             grant_type: "authorization_code"
         };
-        const res = await request({
+        const res = await this._request({
             url: GOOGLE_OAUTH2_TOKEN_URL,
             method: "POST",
             body: stringify(data),
@@ -55,6 +64,8 @@ export default class OAuth2Client extends EventEmitter {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
         }
+        this._accessToken = tokens.access_token;
+        this._refreshToken = tokens.refresh_token;
         this.emit("tokens", tokens);
         return {
             tokens,
@@ -90,7 +101,7 @@ export default class OAuth2Client extends EventEmitter {
             client_secret: this._clientSecret,
             grant_type: "refresh_token",
         };
-        const res = await request({
+        const res = await this._request({
             url: GOOGLE_OAUTH2_TOKEN_URL,
             method: "POST",
             body: stringify(data),
@@ -103,17 +114,12 @@ export default class OAuth2Client extends EventEmitter {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
         }
+        this._accessToken = tokens.access_token;
+        this._refreshToken = tokens.refresh_token;
         this.emit("tokens", tokens);
         return {
             tokens,
             res
         };
-    }
-
-    setCredentials(accessToken, refreshToken) {
-        this._accessToken = accessToken;
-        if (refreshToken) {
-            this._refreshToken = refreshToken;
-        }
     }
 }
