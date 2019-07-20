@@ -1,0 +1,33 @@
+{
+  "name": "@buttercup/google-oauth2-client",
+  "version": "0.0.0",
+  "description": "Google OAuth2 authentication client",
+  "main": "source/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buttercup/google-oauth2-client.git"
+  },
+  "keywords": [
+    "google",
+    "oauth2",
+    "client",
+    "auth",
+    "googleapis"
+  ],
+  "author": "Perry Mitchell <perry@perrymitchell.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buttercup/google-oauth2-client/issues"
+  },
+  "homepage": "https://github.com/buttercup/google-oauth2-client#readme",
+  "devDependencies": {
+    "eventemitter3": "^4.0.0",
+    "query-string": "^6.8.1"
+  },
+  "dependencies": {
+    "cowl": "^0.4.0"
+  }
+}
