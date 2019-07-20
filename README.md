@@ -1,6 +1,8 @@
 # Google OAuth2 Client
 > Minimal compatibility-first Google OAuth2 client implementation
 
+[![npm version](https://badge.fury.io/js/%40buttercup%2Fgoogle-oauth2-client.svg)](https://www.npmjs.com/package/@buttercup/google-oauth2-client)
+
 ## About
 
 This library is a minimal implementation of the [`google-auth-library`](https://github.com/googleapis/google-auth-library-nodejs) project, designed to be compatible with NodeJS, the browser and React Native. The `google-auth-library` package has had [problems with compatibility](https://github.com/googleapis/google-auth-library-nodejs/issues/150) in this regard and rather than wait for that to get sorted, this library was released to solve the exact problem without the overhead of project politics, wait times and package excess (extra features not needed that are causing the incompatibilities in the first place).
