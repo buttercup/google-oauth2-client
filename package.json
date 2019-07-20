@@ -11,6 +11,10 @@
     "test": "npm run build:test && npm run test:specs",
     "test:specs": "nyc mocha -r ./test/index.js ./test/specs/**/*.spec.js"
   },
+  "files": [
+    "dist/**/*.js",
+    "CHANGELOG.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/buttercup/google-oauth2-client.git"
