@@ -34,5 +34,5 @@ The following methods are implemented:
 | Method                | Example                           | Description                               |
 |-----------------------|-----------------------------------|-------------------------------------------|
 | `generateAuthUrl`     | `generateAuthUrl({ access_type: "offline", prompt: "consent", scope: "profile" })` | Generate an authorisation URL |
-| `getToken`            | `await getToken(authCode)`        | Get the tokens for an authorisation code  |
-| `refreshToken`        | `await refreshToken(refreshToken`)| Refresh the tokens                        |
+| `exchangeAuthCodeForToken` | `await exchangeAuthCodeForToken(authCode)` | Get the tokens for an authorisation code |
+| `refreshAccessToken`  | `await refreshAccessToken(refreshToken`)| Refresh the tokens                  |
