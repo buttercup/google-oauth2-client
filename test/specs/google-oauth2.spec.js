@@ -50,12 +50,12 @@ describe("google-oauth2", function() {
             });
         });
 
-        describe("getToken", function() {
+        describe("exchangeAuthCodeForToken", function() {
             beforeEach(function() {
                 this.tokensListener = sinon.spy();
                 this.client.on("tokens", this.tokensListener);
                 return this.client
-                    .getToken("auth")
+                    .exchangeAuthCodeForToken("auth")
                     .then(result => {
                         this.result = result;
                     });

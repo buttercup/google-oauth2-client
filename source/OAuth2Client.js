@@ -45,7 +45,7 @@ export default class OAuth2Client extends EventEmitter {
         return `${GOOGLE_OAUTH2_AUTH_BASE_URL}?${stringify(opts)}`;
     }
 
-    async getToken(authCode) {
+    async exchangeAuthCodeForToken(authCode) {
         const data = {
             code: authCode,
             client_id: this._clientID,
@@ -75,15 +75,15 @@ export default class OAuth2Client extends EventEmitter {
         };
     }
 
-    refreshToken(refreshToken) {
+    refreshAccessToken(refreshToken) {
         if (!refreshToken) {
-            return this.refreshTokenNoCache(refreshToken);
+            return this.refreshAccessTokenNoCache(refreshToken);
         }
         if (this._refreshTokenPromises.has(refreshToken)) {
             return this._refreshTokenPromises.get(refreshToken);
         }
         const refreshTokenPromise = this
-            .refreshTokenNoCache(refreshToken)
+            .refreshAccessTokenNoCache(refreshToken)
             .then(rt => {
                 this._refreshTokenPromises.delete(refreshToken);
                 return rt;
@@ -96,7 +96,7 @@ export default class OAuth2Client extends EventEmitter {
         return refreshTokenPromise;
     }
 
-    async refreshTokenNoCache(refreshToken) {
+    async refreshAccessTokenNoCache(refreshToken) {
         const data = {
             refresh_token: refreshToken,
             client_id: this._clientID,
