@@ -76,18 +76,18 @@ describe("google-oauth2", function() {
 
         describe("auth code decoding", function() {
             beforeEach(function() {
-                sinon.spy(this.client, "exchangeAuthCodeForToken")
-            })
+                sinon.spy(this.client, "exchangeAuthCodeForToken");
+            });
 
             afterEach(function() {
                 this.client.exchangeAuthCodeForToken.restore();
-            })
+            });
 
             it("decodes auth code first before stringifying to be sent in request", function() {
                 const authCode = "4%2FswEmlFcE4vP6BCXY_xmc4kUUgzB3uqB_b9uVLisqrr6-ADVVQEg7a6LojiIkyWq1JY4QhAGWbe5ektjTO";
                 this.client.exchangeAuthCodeForToken(authCode);
                 expect(this.client._request.getCall(0).args[0].body).to.include(authCode);
-            })
+            });
         })
     });
 });
