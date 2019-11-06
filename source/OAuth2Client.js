@@ -1,4 +1,4 @@
-import { stringify } from "query-string";
+import { stringify, parse } from "query-string";
 import { request } from "cowl";
 import EventEmitter from "eventemitter3";
 import {
@@ -46,8 +46,9 @@ export default class OAuth2Client extends EventEmitter {
     }
 
     async exchangeAuthCodeForToken(authCode) {
+        const decodedAuthCode = Object.keys(parse(authCode))[0];
         const data = {
-            code: authCode,
+            code: decodedAuthCode,
             client_id: this._clientID,
             client_secret: this._clientSecret,
             redirect_uri: this._redirectURL,
