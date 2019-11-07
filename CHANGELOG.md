@@ -1,5 +1,11 @@
 # Google OAuth2 Client changelog
 
+## v0.2.1
+_2019-11-07_
+
+ * **Bugfix**:
+   * ([#1](https://github.com/buttercup/google-oauth2-client/pull/1)) Encoded Auth codes would sometimes break authentication procedure
+
 ## v0.2.0
 _2019-08-25_
 
