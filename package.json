@@ -1,6 +1,6 @@
 {
   "name": "@buttercup/google-oauth2-client",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Google OAuth2 authentication client",
   "main": "dist/google-oauth2.js",
   "scripts": {
