@@ -46,6 +46,6 @@
     "webpack-cli": "^3.3.6"
   },
   "dependencies": {
-    "cowl": "^0.4.0"
+    "cowl": "^1.0.0"
   }
 }

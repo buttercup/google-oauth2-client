@@ -1,5 +1,10 @@
 # Google OAuth2 Client changelog
 
+## v0.3.0
+_2020-08-29_
+
+ * Upgrade `cowl` - remove buffer dependency
+
 ## v0.2.1
 _2019-11-07_
 
