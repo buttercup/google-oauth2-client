@@ -1,5 +1,11 @@
 # Google OAuth2 Client changelog
 
+## v1.0.0
+_2022-01-16_
+
+ * Typescript
+ * Wrapped error for refresh token failure
+
 ## v0.3.0
 _2020-08-29_
 
