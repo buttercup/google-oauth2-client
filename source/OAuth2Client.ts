@@ -1,7 +1,9 @@
 import { stringify } from "query-string";
 import { request } from "cowl";
 import EventEmitter from "eventemitter3";
+import { Layerr } from "layerr";
 import {
+    ERR_REFRESH_FAILED,
     GOOGLE_OAUTH2_AUTH_BASE_URL,
     GOOGLE_OAUTH2_TOKEN_URL
 } from "./symbols";
@@ -133,9 +135,19 @@ export class OAuth2Client extends EventEmitter {
             body: stringify(data),
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-            }
+            },
+            validateStatus: () => true
         });
-        const { data: tokens } = res;
+        const { data: tokens, status, statusText } = res;
+        if (status >= 400 || status < 200) {
+            throw new Layerr({
+                info: {
+                    code: ERR_REFRESH_FAILED,
+                    status,
+                    statusText
+                }
+            }, "Bad refresh response");
+        }
         if (tokens && tokens.expires_in) {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
