@@ -1,7 +1,7 @@
 # Google OAuth2 Client
 > Minimal compatibility-first Google OAuth2 client implementation
 
-[![Buttercup](https://cdn.rawgit.com/buttercup-pw/buttercup-assets/6582a033/badge/buttercup-slim.svg)](https://buttercup.pw) [![npm version](https://badge.fury.io/js/%40buttercup%2Fgoogle-oauth2-client.svg)](https://www.npmjs.com/package/@buttercup/google-oauth2-client) [Tests status](https://github.com/buttercup/google-oauth2-client/actions/workflows/test.yml/badge.svg)
+[![Buttercup](https://cdn.rawgit.com/buttercup-pw/buttercup-assets/6582a033/badge/buttercup-slim.svg)](https://buttercup.pw) [![npm version](https://badge.fury.io/js/%40buttercup%2Fgoogle-oauth2-client.svg)](https://www.npmjs.com/package/@buttercup/google-oauth2-client) ![Tests status](https://github.com/buttercup/google-oauth2-client/actions/workflows/test.yml/badge.svg)
 
 ## About
 
