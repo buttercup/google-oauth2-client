@@ -5,9 +5,25 @@ import {
     GOOGLE_OAUTH2_AUTH_BASE_URL,
     GOOGLE_OAUTH2_TOKEN_URL
 } from "./symbols";
+import {
+    GoogleToken
+} from "./types";
 
-export default class OAuth2Client extends EventEmitter {
-    constructor(clientID, clientSecret, oauthRedirectURL) {
+interface GoogleTokenResponse {
+    res: any;
+    tokens: GoogleToken;
+}
+
+export class OAuth2Client extends EventEmitter {
+    protected _accessToken: string;
+    protected _clientID: string;
+    protected _clientSecret: string;
+    protected _redirectURL: string;
+    protected _refreshToken: string;
+    protected _refreshTokenPromises: Map<string, Promise<GoogleTokenResponse>> = null;
+    protected _request: typeof request;
+
+    constructor(clientID: string, clientSecret: string, oauthRedirectURL: string) {
         super();
         this._clientID = clientID;
         this._clientSecret = clientSecret;
@@ -26,7 +42,12 @@ export default class OAuth2Client extends EventEmitter {
         return this._refreshToken;
     }
 
-    generateAuthUrl(config) {
+    generateAuthUrl(config: {
+        access_type: string;
+        prompt: string;
+        response_type?: string;
+        scope: Array<string> | string;
+    }) {
         const {
             access_type,
             scope: rawScope,
@@ -45,7 +66,7 @@ export default class OAuth2Client extends EventEmitter {
         return `${GOOGLE_OAUTH2_AUTH_BASE_URL}?${stringify(opts)}`;
     }
 
-    async exchangeAuthCodeForToken(authCode) {
+    async exchangeAuthCodeForToken(authCode: string): Promise<GoogleTokenResponse> {
         const decodedAuthCode = decodeURIComponent(authCode);
         const data = {
             code: decodedAuthCode,
@@ -76,7 +97,7 @@ export default class OAuth2Client extends EventEmitter {
         };
     }
 
-    refreshAccessToken(refreshToken) {
+    refreshAccessToken(refreshToken?: string): Promise<GoogleTokenResponse> {
         if (!refreshToken) {
             return this.refreshAccessTokenNoCache(refreshToken);
         }
@@ -97,7 +118,9 @@ export default class OAuth2Client extends EventEmitter {
         return refreshTokenPromise;
     }
 
-    async refreshAccessTokenNoCache(refreshToken) {
+    async refreshAccessTokenNoCache(
+        refreshToken?: string
+    ): Promise<GoogleTokenResponse> {
         const data = {
             refresh_token: refreshToken,
             client_id: this._clientID,
