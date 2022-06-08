@@ -1,5 +1,5 @@
 export interface GoogleToken {
     access_token: string;
-    expiry_date: Date;
+    expiry_date: number;
     refresh_token: string;
 }
