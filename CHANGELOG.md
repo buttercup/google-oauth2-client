@@ -1,5 +1,12 @@
 # Google OAuth2 Client changelog
 
+## v2.0.0
+_2023-02-01_
+
+ * **Major Version**
+   * ESM
+   * `fetch` replaces `XMLHttpRequest`
+
 ## v1.0.0
 _2022-01-16_
 

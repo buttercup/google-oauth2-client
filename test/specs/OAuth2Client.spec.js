@@ -1,9 +1,6 @@
-const { expect } = require("chai");
-const sinon = require("sinon");
-const {
-    GOOGLE_OAUTH2_AUTH_BASE_URL,
-    OAuth2Client
-} = require("../../dist/index.js");
+import { expect } from "chai";
+import { stub, spy } from "sinon";
+import { GOOGLE_OAUTH2_AUTH_BASE_URL, OAuth2Client } from "../../dist/index.js";
 
 describe("OAuth2Client", function() {
     beforeEach(function() {
@@ -12,12 +9,15 @@ describe("OAuth2Client", function() {
             "clientsecret",
             "https://website.com"
         );
-        sinon.stub(this.client, "_request").returns(Promise.resolve({
-            data: {
+        stub(this.client, "_fetch").returns(Promise.resolve({
+            ok: true,
+            status: 200,
+            statusText: "OK",
+            json: () => Promise.resolve({
                 access_token: "at",
                 refresh_token: "rt",
                 expires_in: 300
-            }
+            })
         }));
         this.authURLConfig = {
             access_type: "offline",
@@ -60,7 +60,7 @@ describe("OAuth2Client", function() {
 
     describe("exchangeAuthCodeForToken", function() {
         beforeEach(function() {
-            this.tokensListener = sinon.spy();
+            this.tokensListener = spy();
             this.client.on("tokens", this.tokensListener);
             return this.client
                 .exchangeAuthCodeForToken("auth")
@@ -84,7 +84,7 @@ describe("OAuth2Client", function() {
 
     describe("auth code decoding", function() {
         beforeEach(function() {
-            sinon.spy(this.client, "exchangeAuthCodeForToken");
+            spy(this.client, "exchangeAuthCodeForToken");
         });
 
         afterEach(function() {
@@ -94,7 +94,7 @@ describe("OAuth2Client", function() {
         it("decodes auth code first before stringifying to be sent in request", function() {
             const authCode = "4%2FswEmlFcE4vP6BCXY_xmc4kUUgzB3uqB_b9uVLisqrr6-ADVVQEg7a6LojiIkyWq1JY4QhAGWbe5ektjTO";
             this.client.exchangeAuthCodeForToken(authCode);
-            expect(this.client._request.getCall(0).args[0].body).to.include(authCode);
+            expect(this.client._fetch.getCall(0).args[1].body).to.include(authCode);
         });
     })
 });

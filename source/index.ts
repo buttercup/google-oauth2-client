@@ -1,3 +1,3 @@
-export { OAuth2Client } from "./OAuth2Client";
-export * from "./symbols";
-export * from "./types";
+export { OAuth2Client } from "./OAuth2Client.js";
+export * from "./symbols.js";
+export * from "./types.js";

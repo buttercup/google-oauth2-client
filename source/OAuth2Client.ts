@@ -1,29 +1,32 @@
-import { stringify } from "query-string";
-import { request } from "cowl";
+import queryString from "query-string";
 import EventEmitter from "eventemitter3";
-import { Layerr } from "layerr";
+import _Layerr from "layerr";
+import fetch from "cross-fetch";
+import { handleBadResponse } from "./request.js";
 import {
     ERR_REFRESH_FAILED,
     GOOGLE_OAUTH2_AUTH_BASE_URL,
     GOOGLE_OAUTH2_TOKEN_URL
-} from "./symbols";
+} from "./symbols.js";
 import {
     GoogleToken
-} from "./types";
+} from "./types.js";
 
 interface GoogleTokenResponse {
     res: any;
     tokens: GoogleToken;
 }
 
+const { Layerr } = _Layerr;
+
 export class OAuth2Client extends EventEmitter {
     protected _accessToken: string;
     protected _clientID: string;
     protected _clientSecret: string;
+    protected _fetch: typeof fetch;
     protected _redirectURL: string;
     protected _refreshToken: string;
     protected _refreshTokenPromises: Map<string, Promise<GoogleTokenResponse>> = null;
-    protected _request: typeof request;
 
     constructor(clientID: string, clientSecret: string, oauthRedirectURL: string) {
         super();
@@ -33,7 +36,7 @@ export class OAuth2Client extends EventEmitter {
         this._accessToken = null;
         this._refreshToken = null;
         this._refreshTokenPromises = new Map();
-        this._request = request;
+        this._fetch = fetch;
     }
 
     get accessToken() {
@@ -65,7 +68,7 @@ export class OAuth2Client extends EventEmitter {
             client_id: this._clientID,
             redirect_uri: this._redirectURL
         };
-        return `${GOOGLE_OAUTH2_AUTH_BASE_URL}?${stringify(opts)}`;
+        return `${GOOGLE_OAUTH2_AUTH_BASE_URL}?${queryString.stringify(opts)}`;
     }
 
     async exchangeAuthCodeForToken(authCode: string): Promise<GoogleTokenResponse> {
@@ -77,15 +80,15 @@ export class OAuth2Client extends EventEmitter {
             redirect_uri: this._redirectURL,
             grant_type: "authorization_code"
         };
-        const res = await this._request({
-            url: GOOGLE_OAUTH2_TOKEN_URL,
+        const res = await this._fetch(GOOGLE_OAUTH2_TOKEN_URL, {
             method: "POST",
-            body: stringify(data),
+            body: queryString.stringify(data),
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         });
-        const { data: tokens } = res;
+        handleBadResponse(res);
+        const tokens = await res.json();
         if (tokens && tokens.expires_in) {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
@@ -129,25 +132,25 @@ export class OAuth2Client extends EventEmitter {
             client_secret: this._clientSecret,
             grant_type: "refresh_token",
         };
-        const res = await this._request({
-            url: GOOGLE_OAUTH2_TOKEN_URL,
+        const res = await this._fetch(GOOGLE_OAUTH2_TOKEN_URL, {
             method: "POST",
-            body: stringify(data),
+            body: queryString.stringify(data),
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-            },
-            validateStatus: () => true
+            }
         });
-        const { data: tokens, status, statusText } = res;
-        if (status >= 400 || status < 200) {
+        if (res.status >= 400 && res.status < 500) {
             throw new Layerr({
                 info: {
                     code: ERR_REFRESH_FAILED,
-                    status,
-                    statusText
+                    status: res.status,
+                    statusText: res.statusText
                 }
             }, "Bad refresh response");
+        } else if (!res.ok) {
+            handleBadResponse(res);
         }
+        const tokens = await res.json();
         if (tokens && tokens.expires_in) {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
