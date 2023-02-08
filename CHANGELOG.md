@@ -1,5 +1,10 @@
 # Google OAuth2 Client changelog
 
+## v2.1.0
+_2023-02-08_
+
+ * Switch `cross-fetch` to `@buttercup/fetch`
+
 ## v2.0.0
 _2023-02-01_
 
