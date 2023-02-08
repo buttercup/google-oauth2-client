@@ -43,9 +43,10 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "cross-fetch": "^3.1.5",
+    "@buttercup/fetch": "^0.1.0",
     "eventemitter3": "^5.0.0",
     "layerr": "^1.0.0",
+    "node-fetch": "^3.3.0",
     "query-string": "^8.1.0"
   }
 }

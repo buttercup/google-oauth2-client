@@ -1,4 +1,5 @@
 import _Layerr from "layerr";
+import { Response } from "@buttercup/fetch";
 import { ERR_UNKNOWN } from "./symbols.js";
 
 const { Layerr } = _Layerr;

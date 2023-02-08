@@ -1,7 +1,7 @@
 import queryString from "query-string";
 import EventEmitter from "eventemitter3";
 import _Layerr from "layerr";
-import fetch from "cross-fetch";
+import { fetch } from "@buttercup/fetch";
 import { handleBadResponse } from "./request.js";
 import {
     ERR_REFRESH_FAILED,
@@ -88,7 +88,12 @@ export class OAuth2Client extends EventEmitter {
             }
         });
         handleBadResponse(res);
-        const tokens = await res.json();
+        const tokens = await res.json() as {
+            access_token: string;
+            expires_in: number;
+            expiry_date?: number;
+            refresh_token: string;
+        };
         if (tokens && tokens.expires_in) {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
@@ -150,7 +155,12 @@ export class OAuth2Client extends EventEmitter {
         } else if (!res.ok) {
             handleBadResponse(res);
         }
-        const tokens = await res.json();
+        const tokens = await res.json() as {
+            access_token: string;
+            expires_in: number;
+            expiry_date?: number;
+            refresh_token: string;
+        };
         if (tokens && tokens.expires_in) {
             tokens.expiry_date = new Date().getTime() + tokens.expires_in * 1000;
             delete tokens.expires_in;
