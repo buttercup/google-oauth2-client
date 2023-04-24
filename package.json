@@ -43,7 +43,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@buttercup/fetch": "^0.1.0",
+    "@buttercup/fetch": "^0.1.1",
     "eventemitter3": "^5.0.0",
     "layerr": "^1.0.0",
     "node-fetch": "^3.3.0",
