@@ -1,5 +1,11 @@
 # Google OAuth2 Client changelog
 
+## v2.1.1
+_2023-04-24_
+
+ * **Bugfix**:
+   * ([#10])(https://github.com/buttercup/google-oauth2-client/pull/10) `exchangeAuthCodeForToken` results in "Illegal invocation" error in browsers
+
 ## v2.1.0
 _2023-02-08_
 
