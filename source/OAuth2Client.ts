@@ -36,7 +36,7 @@ export class OAuth2Client extends EventEmitter {
         this._accessToken = null;
         this._refreshToken = null;
         this._refreshTokenPromises = new Map();
-        this._fetch = fetch;
+        this._fetch = fetch.bind(window === undefined ? this : window);
     }
 
     get accessToken() {
