@@ -1,5 +1,10 @@
 # Google OAuth2 Client changelog
 
+## v2.2.0
+_2023-11-11_
+
+ * Update dependencies, `layerr`
+
 ## v2.1.2
 _2023-07-16_
 
