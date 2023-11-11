@@ -35,19 +35,19 @@
   },
   "homepage": "https://github.com/buttercup/google-oauth2-client#readme",
   "devDependencies": {
-    "@types/node": "^18.11.18",
-    "chai": "^4.3.7",
+    "@types/node": "^20.9.0",
+    "chai": "^4.3.10",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "rimraf": "^4.1.2",
-    "sinon": "^15.0.1",
-    "typescript": "^4.9.5"
+    "rimraf": "^5.0.5",
+    "sinon": "^17.0.1",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@buttercup/fetch": "^0.1.1",
-    "eventemitter3": "^5.0.0",
-    "layerr": "^1.0.0",
-    "node-fetch": "^3.3.0",
+    "@buttercup/fetch": "^0.2.1",
+    "eventemitter3": "^5.0.1",
+    "layerr": "^2.0.1",
+    "node-fetch": "^3.3.2",
     "query-string": "^8.1.0"
   }
 }

@@ -1,6 +1,6 @@
 import queryString from "query-string";
 import EventEmitter from "eventemitter3";
-import _Layerr from "layerr";
+import { Layerr } from "layerr";
 import { fetch } from "@buttercup/fetch";
 import { handleBadResponse } from "./request.js";
 import {
@@ -16,8 +16,6 @@ interface GoogleTokenResponse {
     res: any;
     tokens: GoogleToken;
 }
-
-const { Layerr } = _Layerr;
 
 export class OAuth2Client extends EventEmitter {
     protected _accessToken: string;

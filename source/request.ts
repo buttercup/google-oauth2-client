@@ -1,8 +1,6 @@
-import _Layerr from "layerr";
+import { Layerr } from "layerr";
 import { Response } from "@buttercup/fetch";
 import { ERR_UNKNOWN } from "./symbols.js";
-
-const { Layerr } = _Layerr;
 
 export function handleBadResponse(res: Response, code: string = ERR_UNKNOWN): void {
     if (!res.ok) {
